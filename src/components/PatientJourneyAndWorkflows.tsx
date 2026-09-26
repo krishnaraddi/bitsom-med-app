@@ -1,27 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { JOURNEYS } from '../data/patientJourneys';
 
-const workflowStages = [
-  { id: '01', title: 'Patient Inquiry', desc: 'Initial contact and needs assessment.' },
-  { id: '02', title: 'Pre-Consultation Screening', desc: 'Eligibility and health prerequisite check.' },
-  { id: '03', title: 'Medical History Review', desc: 'Detailed analysis of medical records.' },
-  { id: '04', title: 'Treatment Plan Formulation', desc: 'Expert medical team develops care plan.' },
-  { id: '05', title: 'Cost Estimation', desc: 'Transparent breakdown of procedures & stay.' },
-  { id: '06', title: 'Travel & Visa Logistics', desc: 'Coordination of travel documents.' },
-  { id: '07', title: 'Pre-Arrival Briefing', desc: 'Orientation for medical tourism.' },
-  { id: '08', title: 'Arrival & Transfer', desc: 'Airport pickup and facility check-in.' },
-  { id: '09', title: 'Initial Medical Assessment', desc: 'On-site clinical validation.' },
-  { id: '10', title: 'Treatment Execution', desc: 'Primary medical/AYUSH procedure.' },
-  { id: '11', title: 'Recovery & Post-Op Care', desc: 'Monitoring and rehabilitation.' },
-  { id: '12', title: 'Wellness & AYUSH Follow-up', desc: 'Integrative therapy sessions.' },
-  { id: '13', title: 'Return & Continued Care', desc: 'Follow-up coordination for home.' },
-];
+type JourneyType = keyof typeof JOURNEYS;
 
 export const PatientJourneyAndWorkflows = () => {
+  const [selectedJourney, setSelectedJourney] = useState<JourneyType>('knee');
+
   return (
     <div className="max-w-4xl mx-auto py-12 px-6">
       <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-8">Patient Journey & Workflows</h2>
+      
+      <div className="flex gap-4 mb-8">
+        {(Object.keys(JOURNEYS) as JourneyType[]).map((type) => (
+          <button
+            key={type}
+            onClick={() => setSelectedJourney(type)}
+            className={`px-4 py-2 rounded-lg font-medium transition-colors ${selectedJourney === type ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+          >
+            {JOURNEYS[type].title}
+          </button>
+        ))}
+      </div>
+
       <div className="space-y-6">
-        {workflowStages.map((stage) => (
+        {JOURNEYS[selectedJourney].stages.map((stage) => (
           <div key={stage.id} className="flex gap-6 pb-6 border-b border-slate-200">
             <span className="text-xl font-medium text-slate-400 tabular-nums">{stage.id}</span>
             <div>
