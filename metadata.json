@@ -1,0 +1,8 @@
+{
+  "name": "HealGoa AI",
+  "description": "An integrated AI platform unifying medical, wellness, and travel services for seamless healthcare experiences in Goa, India.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
