@@ -1,0 +1,36 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Chat message",
+      "type": "object",
+      "properties": {
+        "text": { "type": "string" },
+        "senderId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["text", "senderId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User documents"
+    },
+    "users/{userId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "User chat messages"
+    }
+  }
+}

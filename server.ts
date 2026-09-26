@@ -87,6 +87,30 @@ Provide a structured, clinical-grade agent execution output in JSON format conta
   }
 });
 
+// Firebase-powered Gemini Chatbot endpoint
+app.post("/api/chat", async (req, res) => {
+  const { message, history } = req.body;
+  try {
+    const ai = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY!,
+      httpOptions: { headers: { "User-Agent": "aistudio-build" } },
+    });
+
+    const chat = ai.chats.create({
+      model: "gemini-3.5-flash",
+      history: history.map((h: any) => ({
+        role: h.role,
+        parts: [{ text: h.text }],
+      })),
+    });
+
+    const result = await chat.sendMessage({ message });
+    return res.json({ text: result.text });
+  } catch (err: any) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 async function startServer() {
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
